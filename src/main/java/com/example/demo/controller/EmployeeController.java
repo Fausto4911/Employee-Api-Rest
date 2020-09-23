@@ -39,6 +39,7 @@ public class EmployeeController {
     public Employee updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
         Employee storedEmployee = this.employeeService.getEmployeeById(id);
         if(storedEmployee == null) throw new EmployeeNotFoundException("Not User Found with ID " + id);
+        employee.setiD(id);
         return this.employeeService.updateEmployee(employee);
     }
 
