@@ -35,8 +35,10 @@ public class EmployeeController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping
-    public Employee updateEmployee(@RequestBody Employee employee) {
+    @PutMapping(path="/{id}")
+    public Employee updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
+        Employee storedEmployee = this.employeeService.getEmployeeById(id);
+        if(storedEmployee == null) throw new EmployeeNotFoundException("Not User Found with ID " + id);
         return this.employeeService.updateEmployee(employee);
     }
 
