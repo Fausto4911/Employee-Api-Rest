@@ -4,6 +4,8 @@ import com.example.demo.Exceptions.EmployeeNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,6 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/employees")
 public class EmployeeController {
 
@@ -33,6 +36,17 @@ public class EmployeeController {
         .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PostMapping(path="/all")
+    public ResponseEntity<List<Employee>> createEmployees(@RequestBody List<Employee> employees) {
+//        URI location = ...;
+        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.setLocation(location);
+//        responseHeaders.set("MyResponseHeader", "MyValue");
+        return new ResponseEntity<>(this.employeeService.createEmployeeList(employees), responseHeaders, HttpStatus.CREATED);
+//        return ResponseEntity.ok(this.employeeService.createEmployeeList(employees));
+//       return this.employeeService.createEmployeeList(employees);
     }
 
     @PutMapping(path="/{id}")

@@ -19,6 +19,11 @@ public class EmployeeService {
         return employee;
     }
 
+    public List<Employee> createEmployeeList(List<Employee> employees) {
+        List<Employee> savedList = this.employeeRepository.saveAll(employees);
+        return savedList;
+    }
+
     public Employee getEmployeeById(Long id) {
         Optional<Employee> result = this.employeeRepository.findById(id);
         if (result.isPresent()) {
